@@ -168,7 +168,7 @@ jobs:
        env:
          BUTLER_CREDENTIALS: ${{ secrets.ITCH_IO_API_KEY }}
          CHANNEL: HTML
-         ITCH_GAME: MAZE-INATOR
+         ITCH_GAME: MAZINATOR
          ITCH_USER: STEFANSTEGEMAN
          BRANCH: itch-io
          PACKAGE: build/WebGL
