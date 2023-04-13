@@ -10,8 +10,7 @@ namespace Mazinator
 
     public class CanvasManager : MonoBehaviour
     {
-        [SerializeField]
-        private List<UIElement> uiElements;
+        [SerializeField] private List<UIElement> uiElements;
         private UIElement currentUI;
         private UIElement previousUI;
 
