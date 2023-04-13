@@ -1,9 +1,9 @@
 using TMPro;
 using UnityEngine;
-using System;
 
 namespace Mazinator
 {
+    [RequireComponent(typeof(MazeVisualizer))]
     public class MazeManager : MonoBehaviour
     {
         #region UI Input Fields
@@ -14,19 +14,31 @@ namespace Mazinator
         #region Maze
         [SerializeField] private Vector2Int defaultSize;
         private MazeGrid grid;
+        private MazeVisualizer visualizer;
         #endregion
 
-        public void CreateGrid()
+        private void Start()
         {
-            int width = Int32.Parse(inputWidth.text);
-            int height = Int32.Parse(inputHeight.text);
-            if (width == 0 || height == 0)
+            visualizer = gameObject.GetComponent<MazeVisualizer>();
+        }
+
+        /// <summary>
+        /// Generate a grid.
+        /// </summary>
+        /// <param name="visualize">Whether the grid will be visualized or not</param>
+        public void CreateGrid(bool visualize)
+        {
+            if (int.TryParse(inputWidth.text, out int width) && int.TryParse(inputHeight.text, out int height))
             {
-                grid = new MazeGrid(defaultSize.x, defaultSize.y);
+                grid = new MazeGrid(width, height);
             }
             else
             {
-                grid = new MazeGrid(width, height);
+                grid = new MazeGrid(defaultSize.x, defaultSize.y);
+            }
+            if (visualize)
+            {
+                visualizer.DrawGrid(grid);
             }
         }
     }

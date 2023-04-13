@@ -6,15 +6,16 @@ namespace Mazinator
     [System.Serializable]
     public class MazeGrid
     {
-        private int width;
-        private int height;
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+        private int elementCount;
         private Dictionary<(int, int), Dictionary<string, bool>> grid;
         private Dictionary<string, bool> nodeData;
 
         public MazeGrid(int width, int height)
         {
-            this.width = width;
-            this.height = height;
+            Width = width;
+            Height = height;
             nodeData = new Dictionary<string, bool>()
             {
                 { "Visited", false },
@@ -43,8 +44,8 @@ namespace Mazinator
         public void ResizeGrid(int width, int height)
         {
             ResetGrid();
-            this.width = width;
-            this.height = height;
+            Width = width;
+            Height = height;
             InitializeGrid();
         }
 
@@ -85,13 +86,14 @@ namespace Mazinator
         private void InitializeGrid()
         {
             grid = new Dictionary<(int, int), Dictionary<string, bool>>();
-            for (int x = 0; x < width; x++)
+            for (int y = 0; y < Height; y++)
             {
-                for (int y = 0; y < height; y++)
+                for (int x = 0; x < Width; x++)
                 {
                     grid.Add((x, y), nodeData.ToDictionary(element => element.Key, element => element.Value));
                 }
             }
+            elementCount = grid.Count();
         }
     }
 }
