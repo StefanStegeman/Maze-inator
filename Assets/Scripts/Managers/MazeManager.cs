@@ -22,7 +22,11 @@ namespace Mazinator
             visualizer = gameObject.GetComponent<MazeVisualizer>();
         }
 
-        public void CreateGrid()
+        /// <summary>
+        /// Generate a grid.
+        /// </summary>
+        /// <param name="visualize">Whether the grid will be visualized or not</param>
+        public void CreateGrid(bool visualize)
         {
             if (int.TryParse(inputWidth.text, out int width) && int.TryParse(inputHeight.text, out int height))
             {
@@ -32,7 +36,10 @@ namespace Mazinator
             {
                 grid = new MazeGrid(defaultSize.x, defaultSize.y);
             }
-            visualizer.DrawStartGrid(grid);
+            if (visualize)
+            {
+                visualizer.DrawGrid(grid);
+            }
         }
     }
 }
