@@ -1,110 +1,139 @@
+using UnityEngine;
 using System.Collections.Generic;
 
 namespace Mazinator
 {
-    public struct NodeData
+    public class MazeGrid : MonoBehaviour
     {
-        public (int, int) parent;
-        public bool visited;
-        public bool north;
-        public bool east;
-        public bool south;
-        public bool west;
+        [SerializeField] private GameObject prefab;
+        public MazeCell[,] grid { private set; get; }
+        [HideInInspector] public int width { private set; get; }
+        [HideInInspector] public int height { private set; get; }
 
-        public NodeData(int x, int y)
+        public void CreateGrid(int width, int height)
         {
-            parent = (x, y);
-            visited = false;
-            north = false;
-            east = false;
-            south = false;
-            west = false;
-        }
-
-        public NodeData(int x, int y, bool visited, bool north, bool east, bool south, bool west)
-        {
-            parent = (x, y);
-            this.visited = visited;
-            this.north = north;
-            this.east = east;
-            this.south = south;
-            this.west = west;
-        }
-    }
-
-    [System.Serializable]
-    public class MazeGrid
-    {
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-        private Dictionary<(int, int), NodeData> grid;
-
-        public MazeGrid(int width, int height)
-        {
-            Width = width;
-            Height = height;
+            this.width = width;
+            this.height = height;
             InitializeGrid();
         }
 
         /// <summary>
-        /// Resets the nodeData of all coordinates.
+        /// Reset and re-initialize the grid.
         /// </summary>
         public void ResetGrid()
         {
-            grid.Clear();
             InitializeGrid();
         }
 
         /// <summary>
-        /// Resizes the grid.
-        /// </summary>
-        /// <param name="width">New width of the grid</param>
-        /// <param name="height">New height of the grid</param>
-        public void ResizeGrid(int width, int height)
-        {
-            ResetGrid();
-            Width = width;
-            Height = height;
-            InitializeGrid();
-        }
-
-        /// <summary>
-        /// Get the grid dictionary.
-        /// </summary>
-        /// <returns>The grid dictionary</returns>
-        public Dictionary<(int, int), NodeData> GetGrid()
-        {
-            return grid;
-        }
-
-        /// <summary>
-        /// Gets nodeData from a specific element in the grid dictionary.
-        /// </summary>
-        /// <param name="coordinates">Coordinates of the requested element.</param>
-        /// <returns>nodeData dictionary of requested element</returns>
-        public NodeData GetNodeData((int, int) coordinates)
-        {
-            return grid[coordinates];
-        }
-
-        public void SetNodeData(NodeData nodeData)
-        {
-            grid[nodeData.parent] = nodeData;
-        }
-
-        /// <summary>
-        /// Initialize the grid dictionary with all coordinates and the corresponding (default) nodeData.
-        /// The nodeData will be cloned to prevent assigning it by reference.
+        /// Initialize the grid according to the preferred size.
         /// </summary>
         private void InitializeGrid()
         {
-            grid = new Dictionary<(int, int), NodeData>();
-            for (int y = 0; y < Height; y++)
+            grid = new MazeCell[width, height];
+            for (int x = 0; x < width; x++)
             {
-                for (int x = 0; x < Width; x++)
+                for (int y = 0; y < height; y++)
                 {
-                    grid.Add((x, y), new NodeData(x, y));
+                    GameObject cell = GameObject.Instantiate(prefab, new Vector3Int(x, y, 0), Quaternion.identity, transform);
+                    MazeCell newCell = cell.GetComponent<MazeCell>();
+                    newCell.Coordinates = (x, y);
+                    grid[x, y] = newCell;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Check whether the cell has been visited.
+        /// </summary>
+        /// <param name="x">x coordinate of cell</param>
+        /// <param name="y">y coordinate of cell</param>
+        /// <returns>whether the cell has been visited.</returns>
+        public bool IsVisited(int x, int y)
+        {
+            try
+            {
+                return grid[x, y].Visited;
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Calculate unvisited neighbours of the passed cell coordinates.
+        /// </summary>
+        /// <param name="x">x coordinate of cell</param>
+        /// <param name="y">y coordinate of cell</param>
+        /// <returns>list with the directions of all unvisited neighbours.</returns>
+        public List<string> GetUnvisitedNeighbours(int x, int y)
+        {
+            List<string> unvisitedNeighbours = new List<string>();
+            if (!IsVisited(x, y + 1))
+            {
+                unvisitedNeighbours.Add("north");
+            }
+            if (!IsVisited(x + 1, y))
+            {
+                unvisitedNeighbours.Add("east");
+            }
+            if (!IsVisited(x, y - 1))
+            {
+                unvisitedNeighbours.Add("south");
+            }
+            if (!IsVisited(x - 1, y))
+            {
+                unvisitedNeighbours.Add("west");
+            }
+            return unvisitedNeighbours;
+        }
+
+        /// <summary>
+        /// Convert direction into cell coordinates
+        /// </summary>
+        /// <param name="direction"></param>
+        /// <param name="x">x coordinate of cell</param>
+        /// <param name="y">y coordinate of cell</param>
+        /// <returns>coordinates of the direction + passed cell coordinates.</returns>
+        public (int, int) DirectionToCoordinates(string direction, int x, int y)
+        {
+            switch(direction)
+            {
+                case "north":
+                    return (x + 0, y + 1);
+                case "east":
+                    return (x + 1, y + 0);
+                case "south":
+                    return (x + 0, y - 1);
+                case "west":
+                    return (x + 1, y + 0);
+                default:
+                    Debug.Log("Coordinates out of the grid.");
+                    return (-1, -1);
+            }
+        }
+
+        /// <summary>
+        /// Get the opposite of the passed direction.
+        /// </summary>
+        /// <param name="direction">the direction which will be flipped.</param>
+        /// <returns>the flipped direction.</returns>
+        public string FlipDirection(string direction)
+        {
+            switch (direction)
+            {
+                case "north":
+                    return "south";
+                case "south":
+                    return "north";    
+                case "east":
+                    return "west";
+                case "west":
+                    return "east";
+                default:
+                    Debug.Log(string.Format("The direction {0} does not exist", direction));
+                    return "error";
             }
         }
     }
