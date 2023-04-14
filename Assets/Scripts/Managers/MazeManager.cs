@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Mazinator
 {
-    [RequireComponent(typeof(MazeVisualizer))]
+    [RequireComponent(typeof(MazeGrid))]
     public class MazeManager : MonoBehaviour
     {
         #region UI Input Fields
@@ -14,32 +14,42 @@ namespace Mazinator
         #region Maze
         [SerializeField] private Vector2Int defaultSize;
         private MazeGrid grid;
-        private MazeVisualizer visualizer;
+        #endregion
+
+        #region Algorithms
+        DepthFirstSearch dfsAlgorithm;
         #endregion
 
         private void Start()
         {
-            visualizer = gameObject.GetComponent<MazeVisualizer>();
+            grid = gameObject.GetComponent<MazeGrid>();
+            dfsAlgorithm = new DepthFirstSearch();
+        }
+
+        private void ResetMaze()
+        {
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         /// <summary>
         /// Generate a grid.
         /// </summary>
         /// <param name="visualize">Whether the grid will be visualized or not</param>
-        public void CreateGrid(bool visualize)
+        public void CreateGrid()
         {
+            ResetMaze();
             if (int.TryParse(inputWidth.text, out int width) && int.TryParse(inputHeight.text, out int height))
             {
-                grid = new MazeGrid(width, height);
+                grid.CreateGrid(width, height);
             }
             else
             {
-                grid = new MazeGrid(defaultSize.x, defaultSize.y);
+                Debug.Log("I require dimensions");
             }
-            if (visualize)
-            {
-                visualizer.DrawGrid(grid);
-            }
+            dfsAlgorithm.RunAlgorithm(grid);
         }
     }
 }
