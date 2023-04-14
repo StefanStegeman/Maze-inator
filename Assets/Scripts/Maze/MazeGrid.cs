@@ -1,29 +1,48 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Mazinator
 {
+    public struct NodeData
+    {
+        public (int, int) parent;
+        public bool visited;
+        public bool north;
+        public bool east;
+        public bool south;
+        public bool west;
+
+        public NodeData(int x, int y)
+        {
+            parent = (x, y);
+            visited = false;
+            north = false;
+            east = false;
+            south = false;
+            west = false;
+        }
+
+        public NodeData(int x, int y, bool visited, bool north, bool east, bool south, bool west)
+        {
+            parent = (x, y);
+            this.visited = visited;
+            this.north = north;
+            this.east = east;
+            this.south = south;
+            this.west = west;
+        }
+    }
+
     [System.Serializable]
     public class MazeGrid
     {
         public int Width { get; private set; }
         public int Height { get; private set; }
-        private int elementCount;
-        private Dictionary<(int, int), Dictionary<string, bool>> grid;
-        private Dictionary<string, bool> nodeData;
+        private Dictionary<(int, int), NodeData> grid;
 
         public MazeGrid(int width, int height)
         {
             Width = width;
             Height = height;
-            nodeData = new Dictionary<string, bool>()
-            {
-                { "Visited", false },
-                { "North", false },
-                { "East", false },
-                { "South", false },
-                { "West", false }
-            };
             InitializeGrid();
         }
 
@@ -50,21 +69,10 @@ namespace Mazinator
         }
 
         /// <summary>
-        /// Change the nodeData of specific element.
-        /// </summary>
-        /// <param name="coordinate">Coordinates for the requested element</param>
-        /// <param name="key">Key of the nodeData to be changed</param>
-        /// <param name="newValue">New value for the corresponding key</param>
-        public void ChangeNodeData((int, int) coordinate, string key, bool newValue)
-        {
-            grid[coordinate][key] = newValue;
-        }
-
-        /// <summary>
         /// Get the grid dictionary.
         /// </summary>
         /// <returns>The grid dictionary</returns>
-        public Dictionary<(int, int), Dictionary<string, bool>> GetGrid()
+        public Dictionary<(int, int), NodeData> GetGrid()
         {
             return grid;
         }
@@ -74,9 +82,14 @@ namespace Mazinator
         /// </summary>
         /// <param name="coordinates">Coordinates of the requested element.</param>
         /// <returns>nodeData dictionary of requested element</returns>
-        public Dictionary<string, bool> GetNodeData((int, int) coordinates)
+        public NodeData GetNodeData((int, int) coordinates)
         {
             return grid[coordinates];
+        }
+
+        public void SetNodeData(NodeData nodeData)
+        {
+            grid[nodeData.parent] = nodeData;
         }
 
         /// <summary>
@@ -85,15 +98,14 @@ namespace Mazinator
         /// </summary>
         private void InitializeGrid()
         {
-            grid = new Dictionary<(int, int), Dictionary<string, bool>>();
+            grid = new Dictionary<(int, int), NodeData>();
             for (int y = 0; y < Height; y++)
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    grid.Add((x, y), nodeData.ToDictionary(element => element.Key, element => element.Value));
+                    grid.Add((x, y), new NodeData(x, y));
                 }
             }
-            elementCount = grid.Count();
         }
     }
 }

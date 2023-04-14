@@ -17,9 +17,14 @@ namespace Mazinator
         private MazeVisualizer visualizer;
         #endregion
 
+        #region Algorithms
+        DepthFirstSearch dfsAlgorithm;
+        #endregion
+
         private void Start()
         {
             visualizer = gameObject.GetComponent<MazeVisualizer>();
+            dfsAlgorithm = new DepthFirstSearch();
         }
 
         /// <summary>
@@ -36,6 +41,7 @@ namespace Mazinator
             {
                 grid = new MazeGrid(defaultSize.x, defaultSize.y);
             }
+            dfsAlgorithm.Run(grid);
             if (visualize)
             {
                 visualizer.DrawGrid(grid);

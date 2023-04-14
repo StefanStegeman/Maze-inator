@@ -4,13 +4,21 @@ using System.Threading.Tasks;
 
 namespace Mazinator
 {
+    public enum PixelSize
+    {
+        Normal = 1,
+        Big = 2,
+        XL = 3
+    }
+
     [RequireComponent(typeof(SpriteRenderer))]
     public class MazeVisualizer : MonoBehaviour
     {
         #region Visualization properties
-        [SerializeField] private int cellSize = 2;
-        [SerializeField] private int wallSize = 1;
+        [SerializeField] private PixelSize pixelSize;
         [SerializeField] private int maxPixels = 900;
+        private int cellSize;
+        private int wallSize;
         #endregion
 
         #region Colors
@@ -24,6 +32,8 @@ namespace Mazinator
 
         private void Start()
         {
+            cellSize = (int)pixelSize;
+            wallSize = (int)PixelSize.Normal;
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             previousMazes = new Dictionary<(int, int), Dictionary<(int, int), Sprite>>();
         }
@@ -96,7 +106,6 @@ namespace Mazinator
             {
                 await DrawLine(texture, color, xStart, y, xEnd, y);
             }
-            texture.Apply();
         }
 
         /// <summary>
@@ -118,7 +127,6 @@ namespace Mazinator
                     await Task.Yield();
                 }
             }
-            texture.Apply();
         }
 
         /// <summary>
@@ -133,7 +141,6 @@ namespace Mazinator
                 colors[i] = wallColor;
             }
             texture.SetPixels(colors);
-            texture.Apply(false);
         }
 
         /// <summary>
@@ -154,7 +161,6 @@ namespace Mazinator
                         (wallSize * y + (y + 1) * cellSize));
                 }
             }
-            texture.Apply();
         }
 
         /// <summary>
@@ -165,6 +171,7 @@ namespace Mazinator
         /// <param name="addToDict">Whether the sprite will be added to the previously built sprites</param>
         private void SetTexture(Texture2D texture, MazeGrid grid, bool addToDict)
         {
+            texture.Apply(false);
             Rect rect = new Rect(0.0f, 0.0f, texture.width, texture.height);
             Sprite sprite = Sprite.Create(texture, rect, new Vector2(0.5f, 0.5f), 100.0f);
             spriteRenderer.sprite = sprite;

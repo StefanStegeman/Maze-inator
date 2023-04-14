@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace Mazinator
 {
@@ -19,14 +15,7 @@ namespace Mazinator
         public void InitializeNodeData()
         {
             MazeGrid grid = new MazeGrid(2, 2);
-            Dictionary<string, bool> nodeData = new Dictionary<string, bool>()
-            {
-                { "Visited", false },
-                { "North", false },
-                { "East", false },
-                { "South", false },
-                { "West", false }
-            };
+            NodeData nodeData = new NodeData(0, 0);
             Assert.AreEqual(nodeData, grid.GetNodeData((0, 0)));
         }
 
@@ -34,16 +23,11 @@ namespace Mazinator
         public void ChangeNodeData()
         {
             MazeGrid grid = new MazeGrid(1, 1);
-            grid.ChangeNodeData((0, 0), "Visited", true);
-            grid.ChangeNodeData((0, 0), "North", true);
-            Dictionary<string, bool> nodeData = new Dictionary<string, bool>()
-            {
-                { "Visited", true },
-                { "North", true },
-                { "East", false },
-                { "South", false },
-                { "West", false }
-            };
+            NodeData node = grid.GetNodeData((0, 0));
+            node.visited = true;
+            node.north = true;
+            grid.SetNodeData(node);
+            NodeData nodeData = new NodeData(0, 0, true, true, false, false, false);
             Assert.AreEqual(nodeData, grid.GetNodeData((0, 0)));
         }
 
@@ -51,19 +35,11 @@ namespace Mazinator
         public void ResetGrid()
         {
             MazeGrid grid = new MazeGrid(1, 1);
-            grid.ChangeNodeData((0, 0), "Visited", true);
-            grid.ChangeNodeData((0, 0), "North", true);
-            grid.ResetGrid();
-            Dictionary<string, bool> nodeData = new Dictionary<string, bool>()
-            {
-                { "Visited", false },
-                { "North", false },
-                { "East", false },
-                { "South", false },
-                { "West", false }
-            };
-            Debug.Log(grid.GetNodeData((0, 0))["Visited"]);
-            Debug.Log(grid.GetNodeData((0, 0))["North"]);
+            NodeData node = grid.GetNodeData((0, 0));
+            node.visited = true;
+            node.north = true;
+            grid.SetNodeData(node);
+            NodeData nodeData = new NodeData(0, 0);
             Assert.AreEqual(nodeData, grid.GetNodeData((0, 0)));
         }
     }
