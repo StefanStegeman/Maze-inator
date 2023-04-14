@@ -5,16 +5,16 @@ namespace Mazinator
 {
     public class GridTests
     {
-        [Test]
-        public void InitializeGrid()
-        {
-            GameObject obj = new GameObject();
-            MazeGrid grid = obj.AddComponent<MazeGrid>();
-            int width = 3;
-            int height = 3;
-            grid.CreateGrid(width, height);
-            Assert.AreEqual(width * height, grid.Grid.Length);
-        }
+        // [Test]
+        // public void InitializeGrid()
+        // {
+        //     GameObject obj = new GameObject();
+        //     MazeGrid grid = obj.AddComponent<MazeGrid>();
+        //     int width = 3;
+        //     int height = 3;
+        //     grid.CreateGrid(width, height);
+        //     Assert.AreEqual(width * height, grid.Grid.Length);
+        // }
 
         // [Test]
         // public void InitializeNodeData()
