@@ -20,14 +20,6 @@ namespace Mazinator
         }
 
         /// <summary>
-        /// Reset and re-initialize the grid.
-        /// </summary>
-        public void ResetGrid()
-        {
-            InitializeGrid();
-        }
-
-        /// <summary>
         /// Initialize the grid according to the preferred size.
         /// </summary>
         private void InitializeGrid()
@@ -56,7 +48,16 @@ namespace Mazinator
         {
             try
             {
-                return Grid[x, y].Visited ? 1 : 0;
+                if (x == 1 && y == 2)
+                {
+                    Debug.Log(Grid[x, y].Visited);
+                }
+                if (Grid[x, y].Visited)
+                {
+                    return 1;
+                }
+                return 0;
+                // return Grid[x, y].Visited ? 1 : 0;
             }
             catch
             {
