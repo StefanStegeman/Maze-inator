@@ -1,15 +1,20 @@
 using NUnit.Framework;
+using UnityEngine;
 
 namespace Mazinator
 {
     public class GridTests
     {
-        // [Test]
-        // public void InitializeSize()
-        // {
-        //     MazeGrid grid = new MazeGrid(2, 2);
-        //     Assert.AreEqual(4, grid.GetGrid().Count);
-        // }
+        [Test]
+        public void InitializeGrid()
+        {
+            GameObject obj = new GameObject();
+            MazeGrid grid = obj.AddComponent<MazeGrid>();
+            int width = 3;
+            int height = 3;
+            grid.CreateGrid(width, height);
+            Assert.AreEqual(width * height, grid.Grid.Length);
+        }
 
         // [Test]
         // public void InitializeNodeData()

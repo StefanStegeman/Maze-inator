@@ -41,7 +41,7 @@ namespace Mazinator
                 grid.CreateGrid(5, 5);
                 Debug.Log("I require dimensions");
             }
-            dfsAlgorithm.RunAlgorithm(grid, 0, 0);
+            dfsAlgorithm.RunAlgorithm(grid);
         }
     }
 }

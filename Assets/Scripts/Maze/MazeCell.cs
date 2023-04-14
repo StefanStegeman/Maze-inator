@@ -9,7 +9,7 @@ namespace Mazinator
         public GameObject southWall;
         public GameObject westWall;
         public (int, int) Coordinates { get; set; }
-        [HideInInspector] public bool Visited { get; set; }
+        public bool Visited = false;
 
         public void Start()
         {

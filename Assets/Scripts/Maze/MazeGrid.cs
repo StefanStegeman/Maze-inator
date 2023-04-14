@@ -6,15 +6,17 @@ namespace Mazinator
     public class MazeGrid : MonoBehaviour
     {
         [SerializeField] private GameObject prefab;
-        public MazeCell[,] grid { private set; get; }
+        public MazeCell[,] Grid { private set; get; }
         [HideInInspector] public int width { private set; get; }
         [HideInInspector] public int height { private set; get; }
 
+        public List<string> path;
         public void CreateGrid(int width, int height)
         {
             this.width = width;
             this.height = height;
             InitializeGrid();
+            path = new List<string>();
         }
 
         /// <summary>
@@ -30,15 +32,16 @@ namespace Mazinator
         /// </summary>
         private void InitializeGrid()
         {
-            grid = new MazeCell[width, height];
-            for (int x = 0; x < width; x++)
+            Grid = new MazeCell[width, height];
+            for (int y = 0; y < height; y++)
             {
-                for (int y = 0; y < height; y++)
+                for (int x = 0; x < width; x++)
                 {
                     GameObject cell = GameObject.Instantiate(prefab, new Vector3Int(x, y, 0), Quaternion.identity, transform);
+                    cell.name = string.Format("Cell ({0}, {1})", x, y);
                     MazeCell newCell = cell.GetComponent<MazeCell>();
                     newCell.Coordinates = (x, y);
-                    grid[x, y] = newCell;
+                    Grid[x, y] = newCell;
                 }
             }
         }
@@ -49,15 +52,15 @@ namespace Mazinator
         /// <param name="x">x coordinate of cell</param>
         /// <param name="y">y coordinate of cell</param>
         /// <returns>whether the cell has been visited.</returns>
-        public bool IsVisited(int x, int y)
+        public int IsVisited(int x, int y)
         {
             try
             {
-                return grid[x, y].Visited;
+                return Grid[x, y].Visited ? 1 : 0;
             }
             catch
             {
-                return true;
+                return -1;
             }
         }
 
@@ -70,19 +73,19 @@ namespace Mazinator
         public List<string> GetUnvisitedNeighbours(int x, int y)
         {
             List<string> unvisitedNeighbours = new List<string>();
-            if (!IsVisited(x, y + 1))
+            if (IsVisited(x, y + 1) == 0)
             {
                 unvisitedNeighbours.Add("north");
             }
-            if (!IsVisited(x + 1, y))
+            if (IsVisited(x + 1, y) == 0)
             {
                 unvisitedNeighbours.Add("east");
             }
-            if (!IsVisited(x, y - 1))
+            if (IsVisited(x, y - 1) == 0)
             {
                 unvisitedNeighbours.Add("south");
             }
-            if (!IsVisited(x - 1, y))
+            if (IsVisited(x - 1, y) == 0)
             {
                 unvisitedNeighbours.Add("west");
             }
@@ -107,7 +110,7 @@ namespace Mazinator
                 case "south":
                     return (x + 0, y - 1);
                 case "west":
-                    return (x + 1, y + 0);
+                    return (x - 1, y + 0);
                 default:
                     Debug.Log("Coordinates out of the grid.");
                     return (-1, -1);
