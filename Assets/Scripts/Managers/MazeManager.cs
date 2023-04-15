@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mazinator
 {
@@ -9,6 +10,7 @@ namespace Mazinator
         #region UI Input Fields
         [SerializeField] private TMP_InputField inputWidth;
         [SerializeField] private TMP_InputField inputHeight;
+        [SerializeField] private Slider speedSlider;
         #endregion
 
         #region Maze
@@ -26,7 +28,7 @@ namespace Mazinator
             dfsAlgorithm = new DepthFirstSearch();
         }
 
-        private void ResetMaze()
+        public void ResetMaze()
         {
             foreach (Transform child in transform)
             {
@@ -34,11 +36,15 @@ namespace Mazinator
             }
         }
 
+        public void ChangeVisualizationSpeed()
+        {
+            dfsAlgorithm.ChangeSpeed((int)speedSlider.value);
+        }
+
         /// <summary>
-        /// Generate a grid.
+        /// Generates the maze.
         /// </summary>
-        /// <param name="visualize">Whether the grid will be visualized or not</param>
-        public void CreateGrid()
+        public void GenerateMaze()
         {
             ResetMaze();
             if (int.TryParse(inputWidth.text, out int width) && int.TryParse(inputHeight.text, out int height))

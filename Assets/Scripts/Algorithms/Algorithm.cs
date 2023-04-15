@@ -6,10 +6,17 @@ namespace Mazinator
     public class Algorithm
     {
         protected Dictionary<(int, int), bool> visited;
+        protected int miliseconds;
 
         public Algorithm()
         {
             visited = new Dictionary<(int, int), bool>();
+            miliseconds = 100;
+        }
+
+        public void ChangeSpeed(int newSpeed)
+        {
+            miliseconds = newSpeed;
         }
 
         protected void Reset()

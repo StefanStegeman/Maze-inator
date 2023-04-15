@@ -18,7 +18,7 @@ namespace Mazinator
                 if (!visited.ContainsKey((coordinates.Item1, coordinates.Item2)))
                 {
                     MazeCell move = grid.Grid[coordinates.Item1, coordinates.Item2];
-                    await Task.Delay(10);
+                    await Task.Delay(miliseconds);
                     DisableWalls(grid, direction, cell, move);
                     await DepthFirstAlgorithm(grid, move, move.Coordinates.Item1, move.Coordinates.Item2);
                 }
