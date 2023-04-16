@@ -1,63 +1,103 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using System.Collections.Generic;
 
 namespace Mazinator
 {
-    public class MazeCell : MonoBehaviour
+    public struct MazeTile
     {
-        public GameObject northWall;
-        public GameObject eastWall;
-        public GameObject southWall;
-        public GameObject westWall;
-        public (int, int) Coordinates { get; set; }
-        public bool Visited = false;
+        public Vector3Int coordinates;
+        public bool visited;
+        public string walls;
 
-        public void Start()
+        private Color startingColor;
+        private Color finalColor;
+        private Dictionary<string, Tile> tileDictionary;
+
+        public MazeTile(Vector3Int coordinates, Color startingColor, Color finalColor, Dictionary<string, Tile> tileDictionary)
         {
-            Visited = false;
+            this.coordinates = coordinates;
+            this.startingColor = startingColor;
+            this.finalColor = finalColor;
+            this.tileDictionary = tileDictionary;
+            visited = false;
+            walls = "nesw";
         }
 
-        public void DisableWall(string direction)
-        {   
-            switch(direction)
+        /// <summary>
+        /// Reset tile
+        /// </summary>
+        /// <param name="tilemap">tilemap with the tile on it</param>
+        public void ResetTile(Tilemap tilemap)
+        {
+            // tilemap.SetColor(coordinates, startingColor);
+            ChangeTile(tileDictionary["tile"], tilemap);
+        }
+
+        /// <summary>
+        /// Disable wall of the tile.
+        /// </summary>
+        /// <param name="direction">direction of the wall which will be disabled</param>
+        /// <param name="tilemap">tilemap with the tile on it</param>
+        public void DisableWall(string direction, Tilemap tilemap)
+        {
+            walls = walls.Replace(direction.Substring(0, 1), "");
+            switch (walls)
             {
-                case "north":
-                    northWall.gameObject.SetActive(false);
+                case "nsw":
+                    ChangeTile(tileDictionary["nsw"], tilemap);
                     break;
-                case "east":
-                    eastWall.gameObject.SetActive(false);
+                case "new":
+                    ChangeTile(tileDictionary["new"], tilemap);
                     break;
-                case "south":
-                    southWall.gameObject.SetActive(false);
+                case "nes":
+                    ChangeTile(tileDictionary["nes"], tilemap);
                     break;
-                case "west":
-                    westWall.gameObject.SetActive(false);
+                case "esw":
+                    ChangeTile(tileDictionary["esw"], tilemap);
                     break;
-                default:
-                    Debug.Log("This is not a valid direction.");
+                case "ns":
+                    ChangeTile(tileDictionary["ns"], tilemap);
+                    break;
+                case "ew":
+                    ChangeTile(tileDictionary["ew"], tilemap);
+                    break;    
+                case "ne":
+                    ChangeTile(tileDictionary["ne"], tilemap);
+                    break;  
+                case "nw":
+                    ChangeTile(tileDictionary["nw"], tilemap);
+                    break;  
+                case "es":
+                    ChangeTile(tileDictionary["es"], tilemap);
+                    break;  
+                case "sw":
+                    ChangeTile(tileDictionary["sw"], tilemap);
+                    break;  
+                case "n":
+                    ChangeTile(tileDictionary["n"], tilemap);
+                    break;
+                case "e":
+                    ChangeTile(tileDictionary["e"], tilemap);
+                    break;
+                case "s":
+                    ChangeTile(tileDictionary["s"], tilemap);
+                    break;
+                case "w":
+                    ChangeTile(tileDictionary["w"], tilemap);
                     break;
             }
         }
 
-        public void EnableWall(string direction)
-        {   
-            switch(direction)
-            {
-                case "north":
-                    northWall.gameObject.SetActive(true);
-                    break;
-                case "east":
-                    eastWall.gameObject.SetActive(true);
-                    break;
-                case "south":
-                    southWall.gameObject.SetActive(true);
-                    break;
-                case "west":
-                    westWall.gameObject.SetActive(true);
-                    break;
-                default:
-                    Debug.Log("This is not a valid direction.");
-                    break;
-            }
+        /// <summary>
+        /// Change tile 
+        /// </summary>
+        /// <param name="tile">the tile which will be the replacement</param>
+        /// <param name="tilemap">tilemap with the tile on it</param>
+        private void ChangeTile(Tile tile, Tilemap tilemap)
+        {
+            tilemap.SetTile(coordinates, tile);
+            // tilemap.SetColor(coordinates, finalColor);
         }
     }
 }
