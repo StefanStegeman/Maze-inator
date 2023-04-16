@@ -16,46 +16,42 @@ namespace Mazinator
         #region Maze
         [SerializeField] private Vector2Int defaultSize;
         private MazeGrid grid;
+        [SerializeField] private GameObject cellObjectPool;
         #endregion
 
         #region Algorithms
-        DepthFirstSearch dfsAlgorithm;
+        public DepthFirstSearch dfsAlgorithm;
         #endregion
 
         private void Start()
         {
             grid = gameObject.GetComponent<MazeGrid>();
-            dfsAlgorithm = new DepthFirstSearch();
+            // dfsAlgorithm = new DepthFirstSearch();
         }
 
-        public void ResetMaze()
+        public void ResetTileMap()
         {
-            foreach (Transform child in transform)
-            {
-                Destroy(child.gameObject);
-            }
+            grid.ResetTileMap();
+            grid.visited.Clear();
         }
 
-        public void ChangeVisualizationSpeed()
+        public void GenerateTileMaze()
         {
-            dfsAlgorithm.ChangeSpeed((int)speedSlider.value);
-        }
-
-        /// <summary>
-        /// Generates the maze.
-        /// </summary>
-        public void GenerateMaze()
-        {
-            ResetMaze();
+            ResetTileMap();
             if (int.TryParse(inputWidth.text, out int width) && int.TryParse(inputHeight.text, out int height))
             {
-                grid.CreateGrid(width, height);
+                grid.CreateTileMap(width, height);
             }
             else
             {
                 Debug.Log("I require dimensions");
             }
-            dfsAlgorithm.RunAlgorithm(grid);
+            dfsAlgorithm.RunAlgorithm(ref grid);
+        }
+
+        public void ChangeVisualizationSpeed()
+        {
+            dfsAlgorithm.ChangeSpeed((int)speedSlider.value);
         }
     }
 }
