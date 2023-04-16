@@ -123,6 +123,78 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &34584919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 34584920}
+  - component: {fileID: 34584922}
+  - component: {fileID: 34584921}
+  m_Layer: 0
+  m_Name: Maze
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &34584920
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34584919}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1981840762}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 343.5, y: 0}
+  m_SizeDelta: {x: 1000, y: 1000}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &34584921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34584919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 8400000, guid: 76a1c4681dc11824a95d771791c7a321, type: 2}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &34584922
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34584919}
+  m_CullTransparentMesh: 1
 --- !u!1 &46882209
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +370,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &189348932
 GameObject:
@@ -311,7 +383,7 @@ GameObject:
   - component: {fileID: 189348933}
   - component: {fileID: 189348935}
   - component: {fileID: 189348934}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Maze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,14 +500,14 @@ Tilemap:
   m_Origin: {x: 0, y: -2, z: 0}
   m_Size: {x: 7, y: 5, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
-  m_TileOrientation: 0
+  m_TileOrientation: 6
   m_TileOrientationMatrix:
-    e00: 1
+    e00: 0.1
     e01: 0
     e02: 0
     e03: 0
     e10: 0
-    e11: 1
+    e11: 0.1
     e12: 0
     e13: 0
     e20: 0
@@ -482,7 +554,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.0793403}
   m_AnchorMax: {x: 0.3144086, y: 0.208}
-  m_AnchoredPosition: {x: -2.0942383, y: 0}
+  m_AnchoredPosition: {x: -2.0943604, y: 0}
   m_SizeDelta: {x: -226, y: -12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &229913874
@@ -531,7 +603,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1960483599}
         m_TargetAssemblyTypeName: Mazinator.MazeManager, Scripts
-        m_MethodName: ResetTileMap
+        m_MethodName: ResetMaze
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -613,7 +685,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.739}
   m_AnchorMax: {x: 0.3144086, y: 0.8156042}
-  m_AnchoredPosition: {x: -7.8876953, y: 0.39135742}
+  m_AnchoredPosition: {x: -7.8878174, y: 0.39135742}
   m_SizeDelta: {x: -185.44, y: -154.3228}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &354723220
@@ -847,6 +919,80 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396369397}
   m_CullTransparentMesh: 1
+--- !u!1 &425333080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 425333083}
+  - component: {fileID: 425333082}
+  m_Layer: 0
+  m_Name: MazeCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!20 &425333082
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425333080}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 8
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 8400000, guid: 76a1c4681dc11824a95d771791c7a321, type: 2}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &425333083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 425333080}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -350, y: -10, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &511803719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1576,11 +1722,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5584776325647375222, guid: 09bcacd45e09c4a4a9368232ae4485f1, type: 3}
       propertyPath: m_Value
-      value: 500
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5584776325647375222, guid: 09bcacd45e09c4a4a9368232ae4485f1, type: 3}
       propertyPath: m_MaxValue
-      value: 2000
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 5584776325647375222, guid: 09bcacd45e09c4a4a9368232ae4485f1, type: 3}
       propertyPath: m_MinValue
@@ -1588,7 +1734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5584776325647375222, guid: 09bcacd45e09c4a4a9368232ae4485f1, type: 3}
       propertyPath: m_Direction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5584776325647375222, guid: 09bcacd45e09c4a4a9368232ae4485f1, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -1608,7 +1754,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5584776326101457756, guid: 09bcacd45e09c4a4a9368232ae4485f1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 5
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5584776326457885775, guid: 09bcacd45e09c4a4a9368232ae4485f1, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1624,7 +1770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5584776326457885775, guid: 09bcacd45e09c4a4a9368232ae4485f1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000061035156
+      value: -0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 5584776326707643024, guid: 09bcacd45e09c4a4a9368232ae4485f1, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1854,7 +2000,7 @@ Transform:
   m_LocalScale: {x: 11.932591, y: 5.4898653, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1000367486
 GameObject:
@@ -2386,7 +2532,7 @@ RectTransform:
   m_Children:
   - {fileID: 1981840762}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2403,8 +2549,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1386851689}
   - component: {fileID: 1386851688}
-  m_Layer: 0
-  m_Name: Grid
+  m_Layer: 3
+  m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2418,7 +2564,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386851687}
   m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellSize: {x: 0.1, y: 0.1, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -2430,12 +2576,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386851687}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: -4, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_LocalPosition: {x: -350, y: -10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 189348933}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1489266750
 GameObject:
@@ -2501,7 +2647,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1583885636
 GameObject:
@@ -2588,7 +2734,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1960483599}
         m_TargetAssemblyTypeName: Mazinator.MazeManager, Scripts
-        m_MethodName: GenerateTileMaze
+        m_MethodName: GenerateMaze
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2873,7 +3019,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1960483599
 MonoBehaviour:
@@ -2890,8 +3036,12 @@ MonoBehaviour:
   inputWidth: {fileID: 511803721}
   inputHeight: {fileID: 588992004}
   speedSlider: {fileID: 2135500960}
-  defaultSize: {x: 10, y: 10}
-  cellObjectPool: {fileID: 0}
+  minSize: 10
+  maxSize: 250
+  defaultScale: 0.8
+  maxScale: 0.031
+  tilemap: {fileID: 1386851687}
+  camera: {fileID: 425333082}
   dfsAlgorithm: {fileID: 80665121}
 --- !u!114 &1960483600
 MonoBehaviour:
@@ -2906,7 +3056,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 2996427763338761985, guid: e5ee6c92c228b194d8e2e6846155e236, type: 3}
-  maxSize: 250
   tilemap: {fileID: 189348935}
   emptyTile: {fileID: 11400000, guid: 87abf8f96a5120f4494868781b186c70, type: 2}
   startingTile: {fileID: 11400000, guid: 14f2d8def095e7d42a0454e703f464a3, type: 2}
@@ -2943,6 +3092,8 @@ MonoBehaviour:
     tile: {fileID: 11400000, guid: 7973ca7d51da66944ac74d7b1bada37e, type: 2}
   - name: ew
     tile: {fileID: 11400000, guid: 7efd65c5fd92c1d4fae2a84a8dd845a8, type: 2}
+  startingColor: {r: 0, g: 0, b: 0, a: 1}
+  finalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1981840761
 GameObject:
   m_ObjectHideFlags: 0
@@ -2977,6 +3128,7 @@ RectTransform:
   - {fileID: 1583885637}
   - {fileID: 229913873}
   - {fileID: 519351249}
+  - {fileID: 34584920}
   m_Father: {fileID: 1282430921}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

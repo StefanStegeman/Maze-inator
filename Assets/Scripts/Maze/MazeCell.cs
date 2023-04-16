@@ -24,16 +24,21 @@ namespace Mazinator
             walls = "nesw";
         }
 
+        /// <summary>
+        /// Reset tile
+        /// </summary>
+        /// <param name="tilemap">tilemap with the tile on it</param>
         public void ResetTile(Tilemap tilemap)
         {
+            // tilemap.SetColor(coordinates, startingColor);
             ChangeTile(tileDictionary["tile"], tilemap);
         }
 
-        public void Hoi()
-        {
-            Debug.Log(walls);
-        }
-
+        /// <summary>
+        /// Disable wall of the tile.
+        /// </summary>
+        /// <param name="direction">direction of the wall which will be disabled</param>
+        /// <param name="tilemap">tilemap with the tile on it</param>
         public void DisableWall(string direction, Tilemap tilemap)
         {
             walls = walls.Replace(direction.Substring(0, 1), "");
@@ -84,9 +89,15 @@ namespace Mazinator
             }
         }
 
+        /// <summary>
+        /// Change tile 
+        /// </summary>
+        /// <param name="tile">the tile which will be the replacement</param>
+        /// <param name="tilemap">tilemap with the tile on it</param>
         private void ChangeTile(Tile tile, Tilemap tilemap)
         {
             tilemap.SetTile(coordinates, tile);
+            // tilemap.SetColor(coordinates, finalColor);
         }
     }
 }

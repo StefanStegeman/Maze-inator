@@ -6,7 +6,12 @@ namespace Mazinator
 {
     public class DepthFirstSearch : Algorithm 
     {
-        private IEnumerator DFSA(MazeGrid grid, Vector3Int cell)
+        /// <summary>
+        /// Depth first search maze generator.
+        /// </summary>
+        /// <param name="grid">The grid of the maze</param>
+        /// <param name="cell">The current cell</param>
+        private IEnumerator Algorithm(MazeGrid grid, Vector3Int cell)
         {
             grid.visited.Add(cell);
             List<string> neighbours = grid.GetUnvisitedNeighbours(cell.x, cell.y);
@@ -19,7 +24,7 @@ namespace Mazinator
                 {
                     yield return new WaitForSeconds(miliseconds * 0.001f);
                     grid.DisableWalls(direction, cell, coordinates);
-                    yield return StartCoroutine(DFSA(grid, coordinates));
+                    yield return StartCoroutine(Algorithm(grid, coordinates));
                 }
             }
         }
@@ -29,7 +34,15 @@ namespace Mazinator
         /// </summary>
         public void RunAlgorithm(ref MazeGrid grid)
         {
-            StartCoroutine(DFSA(grid, new Vector3Int(0, 0, 0)));
+            StartCoroutine(Algorithm(grid, new Vector3Int(0, 0, 0)));
+        }
+
+        /// <summary>
+        /// Stop the algorithm from searching.
+        /// </summary>
+        public void Stop()
+        {
+            StopAllCoroutines();
         }
     }
 }
