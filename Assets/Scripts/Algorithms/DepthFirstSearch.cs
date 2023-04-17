@@ -32,17 +32,9 @@ namespace Mazinator
         /// <summary>
         /// Run the selected algorithm.
         /// </summary>
-        public void RunAlgorithm(ref MazeGrid grid)
+        public override void Run(MazeGrid grid)
         {
             StartCoroutine(Algorithm(grid, new Vector3Int(0, 0, 0)));
-        }
-
-        /// <summary>
-        /// Stop the algorithm from searching.
-        /// </summary>
-        public void Stop()
-        {
-            StopAllCoroutines();
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Mazinator
 {
-    public class Algorithm : MonoBehaviour
+    public abstract class Algorithm : MonoBehaviour
     {
         protected float miliseconds = 100f;
 
@@ -10,9 +10,22 @@ namespace Mazinator
         /// Change speed of the visualization.
         /// </summary>
         /// <param name="newSpeed">The new speed</param>
-        public void ChangeSpeed(int newSpeed)
+        public void ChangeSpeed(float newSpeed)
         {
             miliseconds = newSpeed;
         }
+
+        /// <summary>
+        /// Stop the algorithm.
+        /// </summary>
+        public void Stop()
+        {
+            StopAllCoroutines();
+        }
+
+        /// <summary>
+        /// Run the selected algorithm.
+        /// </summary>
+        public abstract void Run(MazeGrid grid);
     }
 }

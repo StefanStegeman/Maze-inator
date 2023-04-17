@@ -30,7 +30,6 @@ namespace Mazinator
 
         [SerializeField] Tiles[] tileArray;
         private Dictionary<string, Tile> tileDictionary;
-        private Dictionary<Vector3Int, string> walls;
         [SerializeField] private Color startingColor;
         [SerializeField] private Color finalColor;
 
@@ -58,13 +57,7 @@ namespace Mazinator
         public void ResetTileMap()
         {
             visited.Clear();
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    tilemap.SetTile(new Vector3Int(x, y, 0), emptyTile);
-                }
-            }
+            tilemap.ClearAllTiles();
         }
 
         /// <summary>
@@ -76,6 +69,7 @@ namespace Mazinator
         {
             this.width = width;
             this.height = height;
+            Grid = new MazeTile[width, height];
             InitializeTiles();
         }
 
@@ -84,7 +78,6 @@ namespace Mazinator
         /// </summary>
         public void InitializeTiles()
         {
-            Grid = new MazeTile[width, height];
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
