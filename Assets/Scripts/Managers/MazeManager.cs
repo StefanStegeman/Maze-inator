@@ -11,6 +11,7 @@ namespace Mazinator
     public class MazeManager : MonoBehaviour
     {
         #region UI Input Fields
+        [Header("UI Input Fields")]
         [SerializeField] private TMP_InputField inputWidth;
         [SerializeField] private TMP_InputField inputHeight;
         [SerializeField] private Slider speedSlider;
@@ -18,6 +19,7 @@ namespace Mazinator
         #endregion
 
         #region Maze
+        [Header("Maze")]
         [SerializeField] private GameObject tilemap;
         [SerializeField] private Camera mazeCamera;
         [SerializeField] private int maxSize;
@@ -27,10 +29,13 @@ namespace Mazinator
         private float scaleFactor;
         #endregion
 
+        [Header("Algorithms")]
         #region Algorithms
+        [SerializeField] Dummy dummyAlgorithm;
         private Algorithm currentAlgorithm;
         #endregion
 
+        [Header("Error")]
         #region Error
         [SerializeField] private TMP_Text errorText;
         [SerializeField] private float errorTime;
@@ -40,6 +45,7 @@ namespace Mazinator
         {
             grid = gameObject.GetComponent<MazeGrid>();
             defaultPosition = tilemap.gameObject.transform.position;
+            currentAlgorithm = dummyAlgorithm;
         }
 
         /// <summary>
@@ -52,6 +58,7 @@ namespace Mazinator
             grid.visited.Clear();
             mazeCamera.transform.position = new Vector3(-350, -10, -1);
             tilemap.gameObject.transform.position = new Vector3(-350, -10, -1);
+            ChangeVisualizationSpeed();
         }
 
         /// <summary>
@@ -93,7 +100,7 @@ namespace Mazinator
         /// </summary>
         public void ChangeVisualizationSpeed()
         {
-            currentAlgorithm.ChangeSpeed((int)speedSlider.value);
+            currentAlgorithm.ChangeSpeed(speedSlider.value);
         }
 
         /// <summary>
@@ -127,7 +134,7 @@ namespace Mazinator
                 StartCoroutine(DisplayError(string.Format("{0} violates the minimum grid size of {1}", lowestAxis, minSize), errorTime));
                 return false;
             }
-            
+
             if (width > maxSize || height > maxSize)
             {
                 string highestAxis = new[]

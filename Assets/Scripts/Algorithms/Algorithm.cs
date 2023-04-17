@@ -10,7 +10,7 @@ namespace Mazinator
         /// Change speed of the visualization.
         /// </summary>
         /// <param name="newSpeed">The new speed</param>
-        public void ChangeSpeed(int newSpeed)
+        public void ChangeSpeed(float newSpeed)
         {
             miliseconds = newSpeed;
         }
