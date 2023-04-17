@@ -28,7 +28,7 @@ namespace Mazinator
         [SerializeField] private Tile emptyTile;
         [SerializeField] private Tile startingTile;
 
-        [SerializeField] Tiles[] tileArray;
+        [SerializeField] Tiles[] tileArray = new Tiles[0];
         private Dictionary<string, Tile> tileDictionary;
         [SerializeField] private Color startingColor;
         [SerializeField] private Color finalColor;
@@ -54,7 +54,7 @@ namespace Mazinator
         /// <summary>
         /// Reset the tilemap.
         /// </summary>
-        public void ResetTileMap()
+        public void Reset()
         {
             visited.Clear();
             tilemap.ClearAllTiles();
@@ -190,6 +190,15 @@ namespace Mazinator
                     Debug.Log(string.Format("The direction {0} does not exist", direction));
                     return "error";
             }
+        }
+
+        /// <summary>
+        /// Set tilemap function for test purposes.
+        /// </summary>
+        /// <param name="tilemap"></param>
+        public void SetTileMap(Tilemap tilemap)
+        {
+            this.tilemap = tilemap;
         }
     }
 }

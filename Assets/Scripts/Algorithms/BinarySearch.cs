@@ -18,7 +18,6 @@ namespace Mazinator
             Vector3Int coordinates = grid.DirectionToCoordinates(direction, cell);
             if (grid.IsVisited(coordinates) == -1)
             {
-                Debug.Log("bestaat niet");
                 direction = direction == directions[0] ? directions[1] : directions[0];
                 coordinates = grid.DirectionToCoordinates(direction, cell);
                 if (grid.IsVisited(coordinates) != -1)
@@ -28,10 +27,25 @@ namespace Mazinator
             }
             else
             {
-                Debug.Log("bestaat wel");
                 grid.DisableWalls(direction, cell, coordinates);
             }
             yield return new WaitForSeconds(miliseconds);
+        }
+
+        /// <summary>
+        /// Run algorithm on all cells.
+        /// </summary>
+        /// <param name="grid">the grid of the maze</param>
+        /// <param name="directions">two possible directions to choose from</param>
+        private IEnumerator RunOnAllCells(MazeGrid grid, string[] directions)
+        {
+            for (int y = 0; y < grid.height; y++)
+            {
+                for (int x = 0; x < grid.width; x++)
+                {
+                    yield return StartCoroutine(Algorithm(grid, new Vector3Int(x, y, 0), directions));
+                }
+            }
         }
 
         /// <summary>
@@ -40,13 +54,7 @@ namespace Mazinator
         public override void Run(MazeGrid grid)
         {
             string[] directions = new string[2] {"north", "east"};
-            for (int y = 0; y < grid.height; y++)
-            {
-                for (int x = 0; x < grid.width; x++)
-                {
-                    StartCoroutine(Algorithm(grid, new Vector3Int(x, y, 0), directions));
-                }
-            }
+            StartCoroutine(RunOnAllCells(grid, directions));
         }
     }
 }
