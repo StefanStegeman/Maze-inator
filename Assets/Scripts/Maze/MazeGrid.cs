@@ -13,25 +13,25 @@ namespace Mazinator
 
     public class MazeGrid : MonoBehaviour
     {
-        [SerializeField] private GameObject prefab;
-
-        [HideInInspector] public int width { private set; get; }
-        [HideInInspector] public int height { private set; get; }
-        private float startX;
-        private float startY;
-        public MazeTile[, ] Grid {private set; get;}
-        public HashSet<Vector3Int> visited;
-
-        private Dictionary<(int, int), GameObject> allCells;
-
+        [Header("Tiles")]
+        #region Tiles
         [SerializeField] private Tilemap tilemap;
-        [SerializeField] private Tile emptyTile;
         [SerializeField] private Tile startingTile;
-
-        [SerializeField] Tiles[] tileArray = new Tiles[0];
-        private Dictionary<string, Tile> tileDictionary;
+        [SerializeField] private Tiles[] tileArray = new Tiles[0];
         [SerializeField] private Color startingColor;
         [SerializeField] private Color finalColor;
+        private Dictionary<string, Tile> tileDictionary;
+        #endregion 
+
+        #region Dimensions
+        public int width { private set; get; }
+        public int height { private set; get; }
+        #endregion
+
+        #region Runtime
+        public MazeTile[, ] Grid {private set; get;}
+        public HashSet<Vector3Int> visited;
+        #endregion
 
         private void Start()
         {

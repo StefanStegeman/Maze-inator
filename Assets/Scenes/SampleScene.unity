@@ -4473,9 +4473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a22960970da8d6498c68363d1a5ad62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 2996427763338761985, guid: e5ee6c92c228b194d8e2e6846155e236, type: 3}
   tilemap: {fileID: 189348935}
-  emptyTile: {fileID: 11400000, guid: 87abf8f96a5120f4494868781b186c70, type: 2}
   startingTile: {fileID: 11400000, guid: 14f2d8def095e7d42a0454e703f464a3, type: 2}
   tileArray:
   - name: nesw
