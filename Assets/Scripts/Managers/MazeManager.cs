@@ -1,6 +1,9 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using System;
+using System.Linq;
 
 namespace Mazinator
 {
@@ -16,7 +19,9 @@ namespace Mazinator
 
         #region Maze
         [SerializeField] private GameObject tilemap;
-        [SerializeField] private Camera camera;
+        [SerializeField] private Camera mazeCamera;
+        [SerializeField] private int maxSize;
+        [SerializeField] private int minSize;
         private MazeGrid grid;
         private Vector3 defaultPosition;
         private float scaleFactor;
@@ -24,6 +29,11 @@ namespace Mazinator
 
         #region Algorithms
         private Algorithm currentAlgorithm;
+        #endregion
+
+        #region Error
+        [SerializeField] private TMP_Text errorText;
+        [SerializeField] private float errorTime;
         #endregion
 
         private void Start()
@@ -40,7 +50,7 @@ namespace Mazinator
             currentAlgorithm.Stop();
             grid.ResetTileMap();
             grid.visited.Clear();
-            camera.transform.position = new Vector3(-350, -10, -1);
+            mazeCamera.transform.position = new Vector3(-350, -10, -1);
             tilemap.gameObject.transform.position = new Vector3(-350, -10, -1);
         }
 
@@ -53,14 +63,29 @@ namespace Mazinator
             ResetMaze();
             if (int.TryParse(inputWidth.text, out int width) && int.TryParse(inputHeight.text, out int height))
             {
-                grid.CreateTileMap(width, height);
-                ScaleMaze(width, height);
+                if (ValidDimensions(width, height))
+                {
+                    grid.CreateTileMap(width, height);
+                    ScaleMaze(width, height);
+                    currentAlgorithm.Run(grid);
+                }
             }
             else
             {
-                Debug.Log("I require dimensions");
+                StartCoroutine(DisplayError("Specify grid size", errorTime));
             }
-            currentAlgorithm.Run(grid);
+        }
+
+        /// <summary>
+        /// Display error.
+        /// </summary>
+        /// <param name="message">the error message</param>
+        /// <param name="seconds">amount of seconds the message is being displayed</param>
+        public IEnumerator DisplayError(string message, float seconds)
+        {
+            errorText.text = message;
+            yield return new WaitForSeconds(seconds);
+            errorText.text = "";
         }
 
         /// <summary>
@@ -72,7 +97,7 @@ namespace Mazinator
         }
 
         /// <summary>
-        /// Scale the size of the grid to fit the camera.
+        /// Scale the size of the grid to fit the mazeCamera.
         /// </summary>
         /// <param name="width">width of the maze</param>
         /// <param name="height">height of the maze</param>
@@ -80,7 +105,41 @@ namespace Mazinator
         {
             float size = width > height ? width : height;
             tilemap.gameObject.transform.position = new Vector3(tilemap.gameObject.transform.position.x - (float)width / 20f, tilemap.gameObject.transform.position.y - (float)height / 20f, 0);
-            camera.transform.position = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z * size / 10);
+            mazeCamera.transform.position = new Vector3(mazeCamera.transform.position.x, mazeCamera.transform.position.y, mazeCamera.transform.position.z * size / 10);
+        }
+
+        /// <summary>
+        /// Check whether dimensions are valid.
+        /// </summary>
+        /// <param name="width">user defined width of the grid</param>
+        /// <param name="height">user defined height of the grid</param>
+        /// <returns>boolean which indicates whethere the dimensions are valid</returns>
+        private bool ValidDimensions(int width, int height)
+        {
+            if (width < minSize || height < minSize)
+            {
+                string lowestAxis = new[]
+                {
+                    Tuple.Create(width, "width"),
+                    Tuple.Create(height, "height")
+                }.Min().Item2;
+
+                StartCoroutine(DisplayError(string.Format("{0} violates the minimum grid size of {1}", lowestAxis, minSize), errorTime));
+                return false;
+            }
+            
+            if (width > maxSize || height > maxSize)
+            {
+                string highestAxis = new[]
+                {
+                    Tuple.Create(width, "width"),
+                    Tuple.Create(height, "height")
+                }.Max().Item2;
+
+                StartCoroutine(DisplayError(string.Format("{0} violates the maxiumum grid size of {1}", highestAxis, maxSize), errorTime));
+                return false;
+            }
+            return true;
         }
     }
 }
