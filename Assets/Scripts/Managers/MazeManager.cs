@@ -11,30 +11,25 @@ namespace Mazinator
         [SerializeField] private TMP_InputField inputWidth;
         [SerializeField] private TMP_InputField inputHeight;
         [SerializeField] private Slider speedSlider;
+        [SerializeField] private AlgorithmDropDown algorithmSelector;
         #endregion
 
         #region Maze
-        [SerializeField] private int minSize = 10;
-        [SerializeField] private int maxSize = 250;
-        [SerializeField] private float defaultScale = 0.8f;
-        [SerializeField] private float maxScale = 0.031f;
         [SerializeField] private GameObject tilemap;
-        private MazeGrid grid;
         [SerializeField] private Camera camera;
+        private MazeGrid grid;
         private Vector3 defaultPosition;
         private float scaleFactor;
         #endregion
 
         #region Algorithms
-        public DepthFirstSearch dfsAlgorithm;
+        private Algorithm currentAlgorithm;
         #endregion
 
         private void Start()
         {
             grid = gameObject.GetComponent<MazeGrid>();
-            scaleFactor = (defaultScale - maxScale) / (maxSize - minSize);
             defaultPosition = tilemap.gameObject.transform.position;
-            ChangeVisualizationSpeed();
         }
 
         /// <summary>
@@ -42,7 +37,7 @@ namespace Mazinator
         /// </summary>
         public void ResetMaze()
         {
-            dfsAlgorithm.Stop();
+            currentAlgorithm.Stop();
             grid.ResetTileMap();
             grid.visited.Clear();
             camera.transform.position = new Vector3(-350, -10, -1);
@@ -54,6 +49,7 @@ namespace Mazinator
         /// </summary>
         public void GenerateMaze()
         {
+            currentAlgorithm = algorithmSelector.GetAlgorithm();
             ResetMaze();
             if (int.TryParse(inputWidth.text, out int width) && int.TryParse(inputHeight.text, out int height))
             {
@@ -64,12 +60,15 @@ namespace Mazinator
             {
                 Debug.Log("I require dimensions");
             }
-            dfsAlgorithm.RunAlgorithm(ref grid);
+            currentAlgorithm.Run(grid);
         }
 
+        /// <summary>
+        /// Change the speed of the maze visualization on slider value change.
+        /// </summary>
         public void ChangeVisualizationSpeed()
         {
-            dfsAlgorithm.ChangeSpeed((int)speedSlider.value);
+            currentAlgorithm.ChangeSpeed((int)speedSlider.value);
         }
 
         /// <summary>
