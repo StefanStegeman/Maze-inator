@@ -7,7 +7,6 @@ namespace Mazinator
     public class AlgorithmDropDown : MonoBehaviour
     {
         [SerializeField] private List<Algorithm> algorithms;
-        [SerializeField] private Sprite selectSprite;
         private TMP_Dropdown dropdown;
 
         private void Start()

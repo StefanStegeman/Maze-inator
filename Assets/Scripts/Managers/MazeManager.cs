@@ -26,12 +26,11 @@ namespace Mazinator
         [SerializeField] private int minSize = 10;
         private MazeGrid grid;
         private Vector3 defaultPosition;
-        private float scaleFactor;
         #endregion
 
         [Header("Algorithms")]
         #region Algorithms
-        [SerializeField] Dummy dummyAlgorithm;
+        [SerializeField] private Dummy dummyAlgorithm;
         private Algorithm currentAlgorithm;
         #endregion
 
@@ -102,17 +101,6 @@ namespace Mazinator
             currentAlgorithm.ChangeSpeed(speedSlider.value);
         }
 
-        /// <summary>
-        /// Scale the size of the grid to fit the mazeCamera.
-        /// </summary>
-        /// <param name="width">width of the maze</param>
-        /// <param name="height">height of the maze</param>
-        private void ScaleMaze(int width, int height)
-        {
-            float size = width > height ? width : height;
-            tilemap.gameObject.transform.position = new Vector3(tilemap.gameObject.transform.position.x - (float)width / 20f, tilemap.gameObject.transform.position.y - (float)height / 20f, 0);
-            mazeCamera.transform.position = new Vector3(mazeCamera.transform.position.x, mazeCamera.transform.position.y, mazeCamera.transform.position.z * size / 10);
-        }
 
         /// <summary>
         /// Check whether dimensions are valid.
@@ -155,6 +143,18 @@ namespace Mazinator
         public void SetErrorText(TMP_Text textfield)
         {
             errorText = textfield;
+        }
+        
+        /// <summary>
+        /// Scale the size of the grid to fit the mazeCamera.
+        /// </summary>
+        /// <param name="width">width of the maze</param>
+        /// <param name="height">height of the maze</param>
+        private void ScaleMaze(int width, int height)
+        {
+            float size = width > height ? width : height;
+            tilemap.gameObject.transform.position = new Vector3(tilemap.gameObject.transform.position.x - (float)width / 20f, tilemap.gameObject.transform.position.y - (float)height / 20f, 0);
+            mazeCamera.transform.position = new Vector3(mazeCamera.transform.position.x, mazeCamera.transform.position.y, mazeCamera.transform.position.z * size / 10);
         }
     }
 }

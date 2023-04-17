@@ -30,7 +30,7 @@ namespace Mazinator
         /// <param name="tilemap">tilemap with the tile on it</param>
         public void ResetTile(Tilemap tilemap)
         {
-            // tilemap.SetColor(coordinates, startingColor);
+            tilemap.SetColor(coordinates, startingColor);
             ChangeTile(tileDictionary["tile"], tilemap);
         }
 
@@ -97,7 +97,7 @@ namespace Mazinator
         private void ChangeTile(Tile tile, Tilemap tilemap)
         {
             tilemap.SetTile(coordinates, tile);
-            // tilemap.SetColor(coordinates, finalColor);
+            tilemap.SetColor(coordinates, finalColor);
         }
     }
 }
