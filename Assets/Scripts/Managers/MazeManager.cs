@@ -22,8 +22,8 @@ namespace Mazinator
         [Header("Maze")]
         [SerializeField] private GameObject tilemap;
         [SerializeField] private Camera mazeCamera;
-        [SerializeField] private int maxSize;
-        [SerializeField] private int minSize;
+        [SerializeField] private int maxSize = 250;
+        [SerializeField] private int minSize = 10;
         private MazeGrid grid;
         private Vector3 defaultPosition;
         private float scaleFactor;
@@ -54,10 +54,9 @@ namespace Mazinator
         public void ResetMaze()
         {
             currentAlgorithm.Stop();
-            grid.ResetTileMap();
-            grid.visited.Clear();
-            mazeCamera.transform.position = new Vector3(-350, -10, -1);
-            tilemap.gameObject.transform.position = new Vector3(-350, -10, -1);
+            grid.Reset();
+            mazeCamera.transform.position = defaultPosition;
+            tilemap.gameObject.transform.position = defaultPosition;
             ChangeVisualizationSpeed();
         }
 
@@ -121,7 +120,7 @@ namespace Mazinator
         /// <param name="width">user defined width of the grid</param>
         /// <param name="height">user defined height of the grid</param>
         /// <returns>boolean which indicates whethere the dimensions are valid</returns>
-        private bool ValidDimensions(int width, int height)
+        public bool ValidDimensions(int width, int height)
         {
             if (width < minSize || height < minSize)
             {
@@ -147,6 +146,15 @@ namespace Mazinator
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Set the error textfield for test purposes.
+        /// </summary>
+        /// <param name="textfield">textfield which will be used</param>
+        public void SetErrorText(TMP_Text textfield)
+        {
+            errorText = textfield;
         }
     }
 }
