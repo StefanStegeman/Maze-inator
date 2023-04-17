@@ -22,7 +22,7 @@ namespace Mazinator
                 Vector3Int coordinates = grid.DirectionToCoordinates(direction, cell);
                 if (!grid.visited.Contains(coordinates))
                 {
-                    yield return new WaitForSeconds(miliseconds * 0.001f);
+                    yield return new WaitForSeconds(miliseconds);
                     grid.DisableWalls(direction, cell, coordinates);
                     yield return StartCoroutine(Algorithm(grid, coordinates));
                 }

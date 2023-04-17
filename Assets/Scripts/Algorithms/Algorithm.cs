@@ -12,7 +12,7 @@ namespace Mazinator
         /// <param name="newSpeed">The new speed</param>
         public void ChangeSpeed(float newSpeed)
         {
-            miliseconds = newSpeed;
+            miliseconds = newSpeed * 0.001f;
         }
 
         /// <summary>
