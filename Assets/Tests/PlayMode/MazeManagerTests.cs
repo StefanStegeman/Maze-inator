@@ -53,7 +53,9 @@ namespace Mazinator
         public void InvalidHeightDimensionsMax()
         {
             GameObject mazeManagerObject = new GameObject();
-            MazeManager mazeManager = mazeManagerObject.AddComponent<MazeManager>();
+            mazeManagerObject.AddComponent<MazeManager>();
+            MazeManager mazeManager = mazeManagerObject.GetComponent<MazeManager>();
+            // MazeManager mazeManager = mazeManagerObject.AddComponent<MazeManager>();
             mazeManager.SetErrorText(mazeManagerObject.AddComponent<TextMeshPro>());
             int width = 64;
             int height = 283;
